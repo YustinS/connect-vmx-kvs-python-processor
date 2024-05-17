@@ -110,7 +110,7 @@ def lambda_handler(event, context):
         try:
             attribute_data = vm_record.get("Attributes", {})
             for key, value in attribute_data.items():
-                if key.startswith("vm_"):
+                if key.startswith(tuple(["vm_lang", "vm_queue_arn"])):
                     attribute_tag_container += f"{key}={value}&"
             # Remove the trailing & symbol
             attribute_tag_container.rstrip("&")
