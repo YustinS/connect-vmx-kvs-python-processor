@@ -12,3 +12,5 @@ This is largely a drop in replacement of the NodeJS solution, although I have so
 It is intended to be as readable as the original, with the catch being the nested subclasses can be harder to read rather than the `decoder` that is used in NodeJS.
 
 If you want a rambling tale about how this solution eventuate, [you can find if on my blog](https://tech.yustin.nz/aws/amazon-connect/connect-voice-kvs-and-python-processing/)
+
+Note that `vmx_to_s3.lambda_handler` is the primary entry point.
