@@ -10,4 +10,5 @@ Normally this section would go later, but this needs to be stated up front. This
 
 This is largely a drop in replacement of the NodeJS solution, although I have some extra modifications from my codebase such as allowing to add a prefix to the S3 path, as well as partitioning based on time processed.
 It is intended to be as readable as the original, with the catch being the nested subclasses can be harder to read rather than the `decoder` that is used in NodeJS.
-An accompanying blog post is under development, and this README will be updated once it is live
+
+If you want a rambling tale about how this solution eventuate, [you can find if on my blog](https://tech.yustin.nz/aws/amazon-connect/connect-voice-kvs-and-python-processing/)
