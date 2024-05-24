@@ -124,7 +124,7 @@ class KvsPythonConsumerConnect:
 
         # Here can hold the process up by waiting for the KvsConsumerLibrary thread to
         # finish (may never finish for live streaming fragments)
-        while not self.past_end_fragment or not self.finished_audio_processing:
+        while not self.finished_audio_processing:
             time.sleep(1)
 
         log.info("Finished processing")
