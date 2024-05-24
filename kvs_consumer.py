@@ -54,6 +54,7 @@ class KvsPythonConsumerConnect:
         # Attributes used in processing
         self.last_good_fragment_tags = None
         self.past_end_fragment = False
+        self.finished_audio_processing = False
         self.from_audio_fragments = bytearray()
         self.to_audio_fragments = bytearray()
 
@@ -123,7 +124,7 @@ class KvsPythonConsumerConnect:
 
         # Here can hold the process up by waiting for the KvsConsumerLibrary thread to
         # finish (may never finish for live streaming fragments)
-        while not self.past_end_fragment:
+        while not self.past_end_fragment or not self.finished_audio_processing:
             time.sleep(1)
 
         log.info("Finished processing")
@@ -192,7 +193,7 @@ class KvsPythonConsumerConnect:
             )
 
             if int(current_fragment) > int(self.end_fragment):
-                log.info("Pass final timestamp. Ending invocation")
+                log.info("Pass final timestamp.")
                 self.past_end_fragment = True
             else:
                 # Checks for data in the FROM_CUSTOMER channel
@@ -240,10 +241,11 @@ class KvsPythonConsumerConnect:
         except Exception as exc:
             log.error(exc)
         finally:
+            log.info("Finished parsing audio fragments to file")
             # Ensure the end flag is appropriately set so that the service_loop()
             # exits cleanly and returns to the calling flow in synchronous usage,
             # or can be evaluated in async
-            self.past_end_fragment = True
+            self.finished_audio_processing = True
 
     def on_stream_read_exception(self, stream_name, error):
         """
