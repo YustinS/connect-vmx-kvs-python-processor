@@ -37,6 +37,11 @@ Credits:
 # https://github.com/aws-samples/amazon-kinesis-video-streams-consumer-library-for-python/blob/main/amazon_kinesis_video_consumer_library/kinesis_video_streams_parser.py
  """
 
+__version__ = "0.0.1"
+__status__ = "Development"
+__copyright__ = "Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved."
+__author__ = "Dean Colcott <https://www.linkedin.com/in/deancolcott/>"
+
 import timeit
 import logging
 from threading import Thread
