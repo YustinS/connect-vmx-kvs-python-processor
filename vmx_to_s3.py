@@ -1,9 +1,11 @@
 """
-Voicemail processor for Python
+Voicemail processor for Python.
+Transformation of NodeJS KVS Procossor into Python using functionality as found
+chained together.
+https://github.com/amazon-connect/voicemail-express-amazon-connect/blob/main/Code/Core/vmx3_kvs_to_s3.js
 """
 
 import os
-
 # import sys
 import base64
 import json
@@ -23,7 +25,7 @@ log = logging.getLogger()
 #     force=True
 # )
 
-# Boto3 clients ans related config
+# Boto3 clients and related config
 AWS_REGION = os.getenv("AWS_REGION", "us-east-1")
 SESSION = boto3.Session(region_name=AWS_REGION)
 S3_CLIENT = SESSION.client("s3")
@@ -36,7 +38,19 @@ AUDIO_MIME_TYPE = "audio/x-wav"
 
 def lambda_handler(event, context):
     """
-    Fetch media from a specified Kinesis Video stream between the fragments
+    Fetch media from a specified Kinesis Video stream between the fragments. Because of
+    the way Kinesis delivery works it is possible multiple records of mixed type (VM and not)
+    will be delivered, so we need to ensure we process and filter. An alternate approach
+    would be to setup a filter on the Kinesis side looking for Attribute `vm_flag` == 1.
+
+    Input:
+    ---------------
+        event: Kinesis Stream Records - The standard Kinesis record delivered into AWS Lambda
+            when the trigger is configured. This will be Base64Encoded with extra stream related
+            information wrapping it.
+        context: Lambda Context - The standard AWS Lambda context as provided when running in
+            the environment. In this solution this is not really used, but could be used for
+            analytics or other purposes as seen fit.
     """
 
     log.info(event)
