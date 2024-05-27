@@ -127,6 +127,11 @@ class KvsPythonConsumerConnect:
         while not self.finished_audio_processing:
             time.sleep(1)
 
+        # stream_consumer.join()
+        # This would also be a valid block to wait until processing is completed, 
+        # however the while loop is provided to allow the ability to inject more context
+        # to logging/do extra work
+        
         log.info("Finished processing")
 
     ####################################################
